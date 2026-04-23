@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flor de Lótus | Pureza e Resiliência</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Menu Principal">
+            <div class="logo">Lótus<span>Essence</span></div>
+            <div class="acc-controls">
+                <button onclick="changeFontSize(1)" aria-label="Aumentar fonte">A+</button>
+                <button onclick="changeFontSize(-1)" aria-label="Diminuir fonte">A-</button>
+                <button onclick="toggleContrast()" id="contrast-toggle" aria-label="Alternar Alto Contraste">◐</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero reveal" aria-labelledby="hero-title">
+            <div class="container">
+                <h1 id="hero-title">A Flor que Floresce no Lodo</h1>
+                <p>Simbolizando pureza espiritual, a lótus nos ensina sobre superação e beleza.</p>
+            </div>
+        </section>
+
+        <section id="gallery-section" class="container reveal">
+            <h2>Variedades de Lótus</h2>
+            <div id="lotus-grid" class="grid-container" role="region" aria-live="polite">
+                </div>
+        </section>
+
+        <section class="container reveal">
+            <h2>Simbolismo e Significado</h2>
+            <div id="faq-container" class="expandable-list">
+                </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2023 Flor de Lótus - Design Inclusivo.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
