@@ -1,80 +1,82 @@
-// DATA MANAGEMENT - Objetos para renderização dinâmica
-const lotusData = [
-    { title: "Lótus Sagrada", desc: "A Nelumbo nucifera, símbolo de pureza nas religiões orientais." },
-    { title: "Lótus Azul", desc: "Conhecida pelo seu aroma e presença no Egito Antigo." },
-    { title: "Lótus Branca", desc: "Representa o estado de pureza mental e perfeição espiritual." }
+// BANCO DE DADOS DO SITE
+const lotusCards = [
+    {
+        title: "Lótus Sagrada",
+        desc: "Símbolo de pureza espiritual, suas pétalas possuem propriedades autolimpantes únicas.",
+        img: "https://images.unsplash.com/photo-1469598614039-ccfeb0a21111?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        title: "Resiliência Aquática",
+        desc: "Capaz de florescer em águas lodosas, representa a superação das dificuldades.",
+        img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+        title: "Simetria Natural",
+        desc: "Sua geometria perfeita inspira arquitetos e artistas há milênios.",
+        img: "https://images.unsplash.com/photo-1533651180995-3b8dcd33e834?auto=format&fit=crop&w=600&q=80"
+    }
 ];
 
-const symbolismData = [
-    { title: "Renascimento", content: "Como a flor emerge do lodo todas as manhãs sem se sujar." },
-    { title: "Resiliência", content: "A capacidade de florescer em condições adversas." }
+const curiosidades = [
+    { title: "Longevidade", content: "Sementes de lótus podem germinar após 1.300 anos de dormência." },
+    { title: "Termorregulação", content: "A flor consegue manter sua temperatura interna constante, como os humanos." },
+    { title: "O Efeito Lótus", content: "Sua superfície repele água e poeira, técnica usada na nanotecnologia." }
 ];
 
 // INICIALIZAÇÃO
 document.addEventListener('DOMContentLoaded', () => {
-    renderCards();
-    renderAccordion();
-    handleScroll(); // Checar elementos visíveis no load
+    renderContent();
+    initScrollReveal();
 });
 
-// RENDERIZAÇÃO DINÂMICA
-function renderCards() {
+function renderContent() {
+    // Renderiza Cards
     const grid = document.getElementById('lotus-grid');
-    grid.innerHTML = lotusData.map(item => `
+    grid.innerHTML = lotusCards.map(card => `
         <article class="card">
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
+            <img src="${card.img}" alt="${card.title}" class="card-img">
+            <div class="card-body">
+                <h3>${card.title}</h3>
+                <p>${card.desc}</p>
+            </div>
         </article>
     `).join('');
-}
 
-function renderAccordion() {
-    const container = document.getElementById('faq-container');
-    container.innerHTML = symbolismData.map((item, index) => `
+    // Renderiza Acordeão
+    const faq = document.getElementById('faq-container');
+    faq.innerHTML = curiosidades.map(item => `
         <div class="acc-item">
-            <button class="acc-header" onclick="toggleAccordion(this)" aria-expanded="false">
+            <button class="acc-header" onclick="toggleAcc(this)">
                 ${item.title} <span>+</span>
             </button>
-            <div class="acc-content">
-                <p>${item.content}</p>
-            </div>
+            <div class="acc-content"><p>${item.content}</p></div>
         </div>
     `).join('');
 }
 
-// ACESSIBILIDADE: TAMANHO DA FONTE
-let currentFontSize = 16;
-function changeFontSize(delta) {
-    currentFontSize += delta * 2;
-    // Limites de segurança
-    if(currentFontSize < 12) currentFontSize = 12;
-    if(currentFontSize > 24) currentFontSize = 24;
-    document.documentElement.style.setProperty('--font-base', currentFontSize + 'px');
+// FUNÇÕES DE INTERAÇÃO
+function toggleAcc(btn) {
+    btn.parentElement.classList.toggle('active');
+    btn.querySelector('span').innerText = btn.parentElement.classList.contains('active') ? '-' : '+';
 }
 
-// ACESSIBILIDADE: ALTO CONTRASTE
 function toggleContrast() {
     document.body.classList.toggle('high-contrast');
 }
 
-// COMPONENTE: ACORDEÃO
-function toggleAccordion(btn) {
-    const item = btn.parentElement;
-    const isOpen = item.classList.toggle('active');
-    btn.setAttribute('aria-expanded', isOpen);
-    btn.querySelector('span').innerText = isOpen ? '-' : '+';
+let fontSize = 16;
+function changeFontSize(v) {
+    fontSize += v * 2;
+    document.documentElement.style.setProperty('--font-base', fontSize + 'px');
 }
 
-// ANIMAÇÃO SCROLL REVEAL (Visão Sistêmica)
-function handleScroll() {
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(el => {
-        const windowHeight = window.innerHeight;
-        const elementTop = el.getBoundingClientRect().top;
-        if (elementTop < windowHeight - 50) {
-            el.classList.add('active');
-        }
-    });
-}
+// SCROLL REVEAL LOGIC
+function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.1 });
 
-window.addEventListener('scroll', handleScroll);
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
