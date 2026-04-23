@@ -1,74 +1,70 @@
-/* --- VARIÁVEIS DO SISTEMA --- */
 :root {
-    --primary: #d4a5a5; /* Rosa Lótus */
-    --secondary: #4a5d4e; /* Verde Folha */
+    --primary: #d4a5a5;
+    --secondary: #4a5d4e;
     --bg: #fdfaf6;
     --text: #2d2d2d;
     --white: #ffffff;
-    --radius: 12px;
-    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --gap: 20px;
+    --radius: 16px;
+    --transition: all 0.5s ease;
     --font-base: 16px;
 }
 
-/* --- MODO ALTO CONTRASTE --- */
 body.high-contrast {
-    --bg: #000;
-    --text: #fff;
-    --primary: #ffff00;
-    --secondary: #00ffff;
-    --white: #000;
+    --bg: #000; --text: #fff; --primary: #ff0; --secondary: #0ff; --white: #000;
 }
 
-/* --- RESET & BASE --- */
-* { margin: 0; padding: 0; box-box: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { font-size: var(--font-base); scroll-behavior: smooth; }
-body { 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+.section-title { text-align: center; margin-bottom: 40px; font-size: 2rem; color: var(--secondary); }
+
+/* HERO SECTION */
+.hero {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
 }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-
-/* --- HEADER & NAV --- */
-header { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
-.logo { font-weight: bold; font-size: 1.5rem; color: var(--secondary); }
-.acc-controls button { 
-    padding: 8px 12px; cursor: pointer; border-radius: var(--radius);
-    border: 1px solid var(--primary); background: transparent; color: var(--text); margin-left: 5px;
-}
-
-/* --- GRID SYSTEM (Flexibilidade para edição) --- */
+/* GRID & CARDS */
 .grid-container {
     display: grid;
-    /* Mobile: 1 coluna | Desktop: 3 colunas */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: var(--gap);
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
 
 .card {
     background: var(--white);
-    padding: 20px;
     border-radius: var(--radius);
-    border-bottom: 4px solid var(--primary);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: var(--transition);
 }
 
-/* --- ACORDEÃO (Expandables) --- */
-.acc-item { border-bottom: 1px solid var(--primary); margin-bottom: 10px; }
-.acc-header { 
-    width: 100%; text-align: left; padding: 15px; background: none; 
-    border: none; cursor: pointer; font-weight: bold; font-size: 1.1rem;
-    color: var(--secondary); display: flex; justify-content: space-between;
-}
-.acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 15px; }
-.acc-item.active .acc-content { max-height: 200px; padding-bottom: 15px; }
+.card:hover { transform: translateY(-10px); }
 
-/* --- ANIMAÇÃO DE REVEAL --- */
+.card-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body { padding: 20px; }
+
+/* ACORDEÃO */
+.acc-item { background: var(--white); margin-bottom: 15px; border-radius: var(--radius); border: 1px solid var(--primary); }
+.acc-header { width: 100%; padding: 20px; text-align: left; background: none; border: none; cursor: pointer; font-weight: bold; color: var(--secondary); display: flex; justify-content: space-between; }
+.acc-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 20px; }
+.acc-item.active .acc-content { max-height: 200px; padding-bottom: 20px; }
+
+/* ANIMAÇÃO */
 .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
 .reveal.active { opacity: 1; transform: translateY(0); }
